@@ -16,6 +16,7 @@ function Input({label,invalid, textInputConfig,style}) {
   );
 }
 
+
 const styles = StyleSheet.create({
   inputContainer: {
     marginHorizontal: 4,
