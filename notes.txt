@@ -1,0 +1,15 @@
+
+for firebase
+
+for protected API (acessible by only authenticate user) 
+we send extra query param with api ?auth=authToken (eg. in LoginAuthentication WelcomeScreen)
+by doing so data is only accesible by authenticated user 
+if user is not registered then data is not accessible 
+
+change the rule in firebase with this
+{
+  "rules": {
+    ".read": "auth.uid!=null", 
+    ".write": "auth.uid!=null",
+  }
+}
