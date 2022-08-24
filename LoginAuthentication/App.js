@@ -1,7 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StatusBar} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
@@ -30,6 +31,20 @@ function AuthStack() {
   );
 }
 
+function Root() {
+  const authCtx = useContext(AuthContext);
+  useEffect(() => {
+    async function fetchedToken() {
+      const storedToken = await AsyncStorage.getItem('token');
+      if (storedToken) {
+        authCtx.authenticate(storedToken);
+      }
+    }
+    fetchedToken();
+  }, []);
+  return <Navigation />;
+}
+
 function AuthenticatedStack() {
   const authCtx = useContext(AuthContext);
   return (
@@ -54,7 +69,6 @@ function AuthenticatedStack() {
 
 function Navigation() {
   const authCtx = useContext(AuthContext);
-  console.log(authCtx.token);
   return (
     <NavigationContainer>
       {authCtx.token ? <AuthenticatedStack /> : <AuthStack />}
@@ -67,7 +81,9 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
-        <Navigation />
+        <Root />
+        {/* we use this for prolong the app screen (means it shows splash screen) untill we fetch the DATA 
+        we do this because use AsyncStorage in auth-context it shows flickering effect*/}
       </AuthContextProvider>
     </>
   );

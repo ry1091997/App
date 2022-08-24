@@ -3,7 +3,7 @@ import {Alert} from 'react-native';
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import {AuthContext} from '../store/auth-content';
-import {createUser} from '../util/auth';
+import {createUser, getNewToken} from '../util/auth';
 
 function SignupScreen() {
   const authCtx = useContext(AuthContext);
@@ -13,8 +13,13 @@ function SignupScreen() {
     setIsAuthenticating(true);
     try {
       const token = await createUser(email, password);
-      console.log('token', token);
-      authCtx.authenticate(token);
+      // console.log('token', token.idToken);
+      authCtx.authenticate(token.idToken);
+      authCtx.refToken(token.refreshToken);
+
+      setTimeout(() => {
+        getNewToken();
+      }, 3600000);
     } catch (error) {
       Alert.alert(
         'Authentication Failed',
