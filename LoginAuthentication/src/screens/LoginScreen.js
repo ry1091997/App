@@ -15,11 +15,6 @@ function LoginScreen() {
     try {
       const token = await login(email, password);
       authCtx.authenticate(token.idToken);
-      authCtx.refToken(token.refreshToken);
-
-      setTimeout(() => {
-        getNewToken();
-      }, 3600000);
 
       // console.log('reftoken.refreshToken', reftoken.refreshToken);
     } catch (error) {

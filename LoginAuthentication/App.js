@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StatusBar} from 'react-native';
+import {AccessibilityInfo, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LoginScreen from './src/screens/LoginScreen';
@@ -14,6 +14,13 @@ import IconButton from './src/components/ui/IconButton';
 // for authentication firebase sdk library is also used but in this project i use
 // Firebase rest api to sending requestes to certain  api endpoints
 // but Sdk library is best for firebase
+
+// NOTE=> token Expires for every one hour, due to which we can not Access
+// data. For accessing data we can follow to rules
+
+// 1. by regenerating New Token for Every one hour
+// 2. logout the user every one hour (delete new token generate time and
+//   login time ) use setTimeout()
 
 const Stack = createNativeStackNavigator();
 

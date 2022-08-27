@@ -22,21 +22,18 @@ export function login(email, password) {
   return authenticate('signInWithPassword', email, password);
 }
 
-const reftoken = async () => {
-  return await AsyncStorage.getItem('reftoken');
-};
+// const reftoken = async () => {
+//   return await AsyncStorage.getItem('reftoken');
+// };
 
-export async function getNewToken() {
-  const token = await reftoken();
-  // console.log('reftoken AFTER 5600', token);
-  const url = `https://securetoken.googleapis.com/v1/token?key=${API_KEY}`;
-  const response = await axios.post(
-    url,
-    `grant_type=refresh_token&refresh_token=${token}`,
-  );
-  // return response.data;
-  // console.log('refFunction', response.data);
-}
+// export async function getNewToken() {
+//   const token = await reftoken();
+//   const url = `https://securetoken.googleapis.com/v1/token?key=${API_KEY}`;
+//   const response = await axios.post(
+//     url,
+//     `grant_type=refresh_token&refresh_token=${token}`,
+//   );
+// }
 
 // Fetching a new access token before it expires will result
 // in the same access token.

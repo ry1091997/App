@@ -15,11 +15,6 @@ function SignupScreen() {
       const token = await createUser(email, password);
       // console.log('token', token.idToken);
       authCtx.authenticate(token.idToken);
-      authCtx.refToken(token.refreshToken);
-
-      setTimeout(() => {
-        getNewToken();
-      }, 3600000);
     } catch (error) {
       Alert.alert(
         'Authentication Failed',
